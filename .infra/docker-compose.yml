@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  build-etiquetei:
+    build:
+      context: ..
+      dockerfile: .infra/Dockerfile
+    volumes:
+      - ../releases:/usr/src/app/releases

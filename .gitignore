@@ -1,0 +1,12 @@
+/node_modules
+/coverage
+/dist
+/coverage
+/releases
+.vscode
+.env
+.env.production
+*.log
+meta.ini
+meta.data
+etiquetei.ini

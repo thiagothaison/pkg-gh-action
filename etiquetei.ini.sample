@@ -1,0 +1,11 @@
+[app]
+version=1.0.0
+
+[queue]
+name=etiquetei-test-queue
+host=ec2-3-210-167-77.compute-1.amazonaws.com
+port=4222
+user=qlic
+password=R!ck665Dell
+timeout=25000
+enableAuth=true

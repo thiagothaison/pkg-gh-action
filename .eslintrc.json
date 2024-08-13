@@ -1,0 +1,46 @@
+{
+  "extends": ["standard-with-typescript", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["eslint-plugin-import-helpers"],
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "arrow-parens": ["error", "always"],
+    "comma-dangle": ["error", "never"],
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/method-signature-style": ["error", "method"],
+    "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-extraneous-class": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-dynamic-delete": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "import/export": "off",
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "module",
+          "/^@/domain/",
+          "/^@/infra/",
+          "/^@/presentation/",
+          "/^@/tests/",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  }
+}

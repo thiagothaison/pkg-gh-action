@@ -1,0 +1,9 @@
+.husky
+.vscode
+.env*
+.npm-cache
+/*.js
+/node_modules
+/dist
+/coverage
+jest*.ts
