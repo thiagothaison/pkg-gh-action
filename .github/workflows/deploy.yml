@@ -26,6 +26,12 @@ jobs:
         id: vars
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+      # Instalar dependências de build necessárias
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libssl-dev libc6-dev
+
       # Instala Node.js com suporte para ARM
       - name: Set up Node.js
         uses: actions/setup-node@v3
