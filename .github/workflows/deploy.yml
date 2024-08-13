@@ -46,6 +46,7 @@ jobs:
         run: |
           npm install -g pkg
           npm install -g prebuild-install
+          npm config set registry http://registry.npmjs.org/
           prebuild-install -t v18.16.0 -a armv7 --install
 
       # Instalar dependências
