@@ -56,7 +56,7 @@ jobs:
 
       - name: LOGS
         run: |
-          echo '${{ toJSON(steps.vars) }}'
+          echo '${{ toJSON(steps) }}'
 
   deploy:
     name: Deploy to Public Repo
