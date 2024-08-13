@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      VERSION: ${{ steps.vars.outputs.VERSION }}
+      VERSION: ${{ steps.extract_version.outputs.VERSION }}
 
     steps:
       # Configura o QEMU para suportar a arquitetura ARM
