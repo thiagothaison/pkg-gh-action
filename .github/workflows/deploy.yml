@@ -84,7 +84,11 @@ jobs:
           git lfs install
           git lfs track "etiquetei"
           git add .gitattributes
-          git commit -m "Add LFS tracking for etiquetei"
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit."
+          else
+            git commit -m "Add LFS tracking for etiquetei"
+          fi
 
       # Copiar o binário para o repositório público
       - name: Copy binary to public repo
