@@ -74,6 +74,11 @@ jobs:
         with:
           name: etiquetei-binary
 
+      - name: Configure Git User
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       # Setup Git LFS
       - name: Setup Git LFS in public repo
         run: |
@@ -88,8 +93,6 @@ jobs:
         run: |
           cp etiquetei public-repo/
           cd public-repo
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add etiquetei
           git commit -m "bump: ${{ needs.build.outputs.VERSION }}"
           git push
