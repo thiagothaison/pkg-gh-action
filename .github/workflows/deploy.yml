@@ -10,6 +10,9 @@ jobs:
     name: Build for ARM (aarch64)
     runs-on: ubuntu-latest
 
+    outputs:
+      VERSION: ${{ steps.vars.outputs.VERSION }}
+
     steps:
       # Configura o QEMU para suportar a arquitetura ARM
       - name: Setup QEMU
