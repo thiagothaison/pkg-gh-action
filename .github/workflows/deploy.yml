@@ -1,4 +1,4 @@
-name: Build and Deploy to Public Repo
+name: Build and Deploy
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build for ARM (armhf)
+    name: Build for ARM (aarch64)
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
         with:
-          platforms: arm
+          platforms: arm64
 
       # Checkout do código fonte
       - name: Checkout code
@@ -43,9 +43,9 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      # Gerar o binário usando pkg para armhf
+      # Gerar o binário usando pkg para aarch64 (ARM 64-bit)
       - name: Create ARM binary
-        run: npx pkg . --targets node18-linux --output releases/etiquetei
+        run: npx pkg . --targets node18-linux-arm64 --output releases/etiquetei
 
       # Upload do binário gerado como artefato para ser usado no próximo job
       - name: Upload binary
