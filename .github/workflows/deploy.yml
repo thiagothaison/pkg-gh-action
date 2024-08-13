@@ -29,25 +29,11 @@ jobs:
         id: vars
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      # Instalar dependências de build necessárias
-      - name: Install debian dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev libc6-dev
-
       # Instala Node.js com suporte para ARM
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-
-      # Forçar o uso de binários pré-compilados para Node.js
-      - name: Force precompiled Node.js binary
-        run: |
-          npm install -g pkg
-          npm install -g prebuild-install
-          npm config set registry http://registry.npmjs.org/
-          prebuild-install -t v18.16.0 -a armv7 --install
+          node-version: '16'
 
       # Instalar dependências
       - name: Install dependencies
@@ -59,7 +45,7 @@ jobs:
 
       # Gerar o binário usando pkg para armhf
       - name: Create ARM binary
-        run: npx pkg . --targets node18-linux-armv7 --output releases/etiquetei
+        run: npx pkg . --targets node16-linux-armv7 --output releases/etiquetei
 
       # Upload do binário gerado como artefato para ser usado no próximo job
       - name: Upload binary
