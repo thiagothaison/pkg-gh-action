@@ -54,9 +54,20 @@ jobs:
           name: etiquetei-binary
           path: releases/etiquetei
 
+      # Extrair versão a partir da tag e definir como output
+      - name: Extract version from tag
+        id: extract_version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "VERSION=${VERSION}"
+          echo "::set-output name=VERSION::${VERSION}"
+
+      # Verifique o valor de VERSION para debug
       - name: LOGS
         run: |
-          echo '${{ toJSON(steps) }}'
+          echo "Extracted VERSION: ${{ steps.extract_version.outputs.VERSION }}"
+
 
   deploy:
     name: Deploy to Public Repo
