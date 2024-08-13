@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       # Instalar dependências
       - name: Install dependencies
@@ -45,7 +45,7 @@ jobs:
 
       # Gerar o binário usando pkg para armhf
       - name: Create ARM binary
-        run: npx pkg . --targets node16-linux-armv7 --output releases/etiquetei
+        run: npx pkg . --targets node18-linux --output releases/etiquetei
 
       # Upload do binário gerado como artefato para ser usado no próximo job
       - name: Upload binary
