@@ -76,6 +76,7 @@ jobs:
 
       - name: Configure Git User
         run: |
+          cd public-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
