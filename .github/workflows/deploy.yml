@@ -22,7 +22,7 @@ jobs:
 
       # Checkout do código fonte
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Extrair versão a partir da tag
       - name: Extract version from tag
@@ -49,10 +49,14 @@ jobs:
 
       # Upload do binário gerado como artefato para ser usado no próximo job
       - name: Upload binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: etiquetei-binary
           path: releases/etiquetei
+
+      - name: LOGS
+        run: |
+          echo '${{ toJSON(steps.vars) }}'
 
   deploy:
     name: Deploy to Public Repo
@@ -62,7 +66,7 @@ jobs:
     steps:
       # Checkout do repositório público
       - name: Checkout public repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: thiagothaison/etiquetei-releases
           token: ${{ secrets.RELEASE_REPO_TOKEN }}
@@ -70,7 +74,7 @@ jobs:
 
       # Download binary
       - name: Download binary
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: etiquetei-binary
 
@@ -101,6 +105,10 @@ jobs:
           git add etiquetei
           git commit -m "bump: ${{ needs.build.outputs.VERSION }}"
           git push
+
+      - name: LOGS
+        run: |
+          echo '${{ toJSON(needs.build) }}'
 
       # Criar uma nova tag e release no repositório de releases
       - name: Create tag and release
