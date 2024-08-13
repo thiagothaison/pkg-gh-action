@@ -14,47 +14,47 @@ jobs:
       VERSION: ${{ steps.extract_version.outputs.VERSION }}
 
     steps:
-      # Configura o QEMU para suportar a arquitetura ARM
+      # Configure QEMU to support ARM architecture
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
         with:
           platforms: arm64
 
-      # Checkout do código fonte
+      # Checkout the source code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Extrair versão a partir da tag
+      # Extract version from the tag
       - name: Extract version from tag
         id: vars
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      # Instala Node.js com suporte para ARM
+      # Set up Node.js with ARM support
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # Instalar dependências
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Compilar a aplicação
+      # Build the project
       - name: Build the project
         run: npm run build
 
-      # Gerar o binário usando pkg para aarch64 (ARM 64-bit)
+      # Generate the binary using pkg for aarch64 (ARM 64-bit)
       - name: Create ARM binary
         run: npx pkg . --targets node18-linux-arm64 --output releases/etiquetei
 
-      # Upload do binário gerado como artefato para ser usado no próximo job
+      # Upload the generated binary as an artifact to be used in the next job
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
           name: etiquetei-binary
           path: releases/etiquetei
 
-      # Extrair versão a partir da tag e definir como output
+      # Extract version from the tag and set it as output
       - name: Extract version from tag
         id: extract_version
         run: |
@@ -63,19 +63,13 @@ jobs:
           echo "VERSION=${VERSION}"
           echo "::set-output name=VERSION::${VERSION}"
 
-      # Verifique o valor de VERSION para debug
-      - name: LOGS
-        run: |
-          echo "Extracted VERSION: ${{ steps.extract_version.outputs.VERSION }}"
-
-
   deploy:
     name: Deploy to Public Repo
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      # Checkout do repositório público
+      # Checkout the public repository
       - name: Checkout public repo
         uses: actions/checkout@v4
         with:
@@ -83,12 +77,13 @@ jobs:
           token: ${{ secrets.RELEASE_REPO_TOKEN }}
           path: public-repo
 
-      # Download binary
+      # Download the binary artifact
       - name: Download binary
         uses: actions/download-artifact@v4
         with:
           name: etiquetei-binary
 
+      # Configure Git user
       - name: Configure Git User
         run: |
           cd public-repo
@@ -108,7 +103,7 @@ jobs:
             git commit -m "Add LFS tracking for etiquetei"
           fi
 
-      # Copiar o binário para o repositório público
+      # Copy the binary to the public repository
       - name: Copy binary to public repo
         run: |
           cp etiquetei public-repo/
@@ -117,11 +112,7 @@ jobs:
           git commit -m "bump: ${{ needs.build.outputs.VERSION }}"
           git push
 
-      - name: LOGS
-        run: |
-          echo '${{ toJSON(needs.build) }}'
-
-      # Criar uma nova tag e release no repositório de releases
+      # Create a new tag and release in the releases repository
       - name: Create tag and release
         run: |
           curl -X POST \
